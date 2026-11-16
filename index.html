@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>ARミニ太陽系 | SOLAR SYSTEM</title>
+  <!-- 講義のキツネARと同じバージョン -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.7/aframe/build/aframe-ar.js"></script>
+  <style>
+  body { margin: 0; overflow: hidden; background: #050A15; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; }
+  .hud {position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); top: 16px; width: max-content; max-width: calc(100% - 40px); padding: 11px 18px; border-radius: 18px; background: rgba(9,22,41,.79); color: #f1f8ff; text-align: center; pointer-events: none; box-shadow: 0 6px 30px rgba(0,0,0,.15); backdrop-filter: blur(6px); }
+  .hud b {display: block; font-size: 15px; letter-spacing: .065em;}
+  .hud small {display: block; font-size: 11px; letter-spacing: .01em; margin-top: 3px; color: #b8d6f0;}
+</style>
+</head>
+<body>
+  <div class="hud"><b>☀ SOLAR SYSTEM</b><small id="marker-status">キツネのマーカーにカメラを向けてね</small></div>
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;"
+    renderer="antialias: true; colorManagement: true; physicallyCorrectLights: false"
+    vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <!-- あとで自作マーカーに変更可能 -->
+    <a-marker id="solar-marker" type="pattern" url="fox.patt" smooth="true" smooth-count="5" smooth-tolerance="0.01" smooth-threshold="2">
+<!-- 1. マーカー面に置く宇宙展示台（上面 0.075） -->
+<a-cylinder position="0 0.028 0" radius="0.97" height="0.055" segments-radial="96" material="color: #101C32; roughness: 0.58; metalness: 0.35"></a-cylinder>
+<a-cylinder position="0 0.062 0" radius="0.94" height="0.014" segments-radial="96" material="color: #122338; roughness: 0.76; metalness: 0.2"></a-cylinder>
+<a-torus position="0 0.072 0" rotation="90 0 0" radius="0.945" radius-tubular="0.005" segments-radial="8" segments-tubular="96" material="color: #5DCBFF; emissive: #1D5A8D; emissiveIntensity: 0.45"></a-torus>
+<a-torus position="0 0.074 0" rotation="90 0 0" radius="0.915" radius-tubular="0.0015" segments-radial="6" segments-tubular="96" material="color: #3E7595; opacity: 0.72; transparent: true"></a-torus>
+
+<!-- 2. 太陽の光と各惑星の公転軌道 -->
+<a-light type="ambient" color="#C9DEFF" intensity="0.85"></a-light>
+<a-light type="point" position="0 0.38 0" color="#FFCB87" intensity="1.35" distance="2.3" decay="1.25"></a-light>
+
+<a-torus position="0 0.240 0" rotation="90 0 0" radius="0.22" radius-tubular="0.002" segments-radial="6" segments-tubular="96" material="color: #4D88A3; opacity: 0.57; transparent: true; shader: flat"></a-torus>
+<a-torus position="0 0.240 0" rotation="90 0 0" radius="0.32" radius-tubular="0.002" segments-radial="6" segments-tubular="96" material="color: #6B9AAB; opacity: 0.57; transparent: true; shader: flat"></a-torus>
+<a-torus position="0 0.240 0" rotation="90 0 0" radius="0.43" radius-tubular="0.002" segments-radial="6" segments-tubular="96" material="color: #55B8DD; opacity: 0.57; transparent: true; shader: flat"></a-torus>
+<a-torus position="0 0.240 0" rotation="90 0 0" radius="0.54" radius-tubular="0.002" segments-radial="6" segments-tubular="96" material="color: #9F7891; opacity: 0.57; transparent: true; shader: flat"></a-torus>
+<a-torus position="0 0.240 0" rotation="90 0 0" radius="0.7" radius-tubular="0.002" segments-radial="6" segments-tubular="96" material="color: #D6A579; opacity: 0.57; transparent: true; shader: flat"></a-torus>
+<a-torus position="0 0.240 0" rotation="90 0 0" radius="0.86" radius-tubular="0.002" segments-radial="6" segments-tubular="96" material="color: #D1B68B; opacity: 0.57; transparent: true; shader: flat"></a-torus>
+
+<!-- 3. 中央の太陽：惑星の模様はオリジナル画像 -->
+<a-entity position="0 0.25 0">
+  <a-sphere radius="0.128" segments-width="36" segments-height="24"
+      material="src: url(sun.jpg); roughness: 0.55; emissive: #FF7D23; emissiveIntensity: 0.58"
+      animation="property: rotation; to: 0 360 0; dur: 30000; easing: linear; loop: true"></a-sphere>
+  <a-sphere radius="0.147" material="color: #FFB44B; opacity: 0.16; transparent: true; shader: flat; side: double"
+      animation="property: scale; from: 1 1 1; to: 1.1 1.1 1.1; dir: alternate; dur: 1800; loop: true; easing: easeInOutSine"></a-sphere>
+</a-entity>
+
+<!-- 水星：親の回転で公転、球体自身も自転 -->
+<a-entity position="0 0.24 0" rotation="0 15 0"
+  animation="property: rotation; from: 0 15 0; to: 0 375 0; dur: 7000; loop: true; easing: linear">
+  <a-entity position="0.22 0 0">
+    <a-sphere radius="0.024" segments-width="32" segments-height="20" material="src: url(mercury.jpg); roughness: 0.92"
+      animation="property: rotation; from: 0 0 0; to: 0 360 0; dur: 6000; loop: true; easing: linear"></a-sphere>
+
+  </a-entity>
+</a-entity>
+
+<!-- 金星：親の回転で公転、球体自身も自転 -->
+<a-entity position="0 0.24 0" rotation="0 155 0"
+  animation="property: rotation; from: 0 155 0; to: 0 515 0; dur: 10500; loop: true; easing: linear">
+  <a-entity position="0.32 0 0">
+    <a-sphere radius="0.037" segments-width="32" segments-height="20" material="src: url(venus.jpg); roughness: 0.92"
+      animation="property: rotation; from: 0 0 0; to: 0 360 0; dur: 6000; loop: true; easing: linear"></a-sphere>
+
+  </a-entity>
+</a-entity>
+
+<!-- 地球：親の回転で公転、球体自身も自転 -->
+<a-entity position="0 0.24 0" rotation="0 260 0"
+  animation="property: rotation; from: 0 260 0; to: 0 620 0; dur: 14500; loop: true; easing: linear">
+  <a-entity position="0.43 0 0">
+    <a-sphere radius="0.047" segments-width="32" segments-height="20" material="src: url(earth.jpg); roughness: 0.92"
+      animation="property: rotation; from: 0 0 0; to: 0 360 0; dur: 6000; loop: true; easing: linear"></a-sphere>
+
+    <!-- 月も地球の周囲を回る -->
+    <a-entity animation="property: rotation; to: 0 360 0; dur: 3600; loop: true; easing: linear">
+      <a-sphere position="0.074 0 0" radius="0.012" material="color: #C2C6CF; roughness: 1"></a-sphere>
+    </a-entity>
+
+  </a-entity>
+</a-entity>
+
+<!-- 火星：親の回転で公転、球体自身も自転 -->
+<a-entity position="0 0.24 0" rotation="0 70 0"
+  animation="property: rotation; from: 0 70 0; to: 0 430 0; dur: 18800; loop: true; easing: linear">
+  <a-entity position="0.54 0 0">
+    <a-sphere radius="0.035" segments-width="32" segments-height="20" material="src: url(mars.jpg); roughness: 0.92"
+      animation="property: rotation; from: 0 0 0; to: 0 360 0; dur: 6000; loop: true; easing: linear"></a-sphere>
+
+  </a-entity>
+</a-entity>
+
+<!-- 木星：親の回転で公転、球体自身も自転 -->
+<a-entity position="0 0.24 0" rotation="0 210 0"
+  animation="property: rotation; from: 0 210 0; to: 0 570 0; dur: 26500; loop: true; easing: linear">
+  <a-entity position="0.7 0 0">
+    <a-sphere radius="0.077" segments-width="32" segments-height="20" material="src: url(jupiter.jpg); roughness: 0.92"
+      animation="property: rotation; from: 0 0 0; to: 0 360 0; dur: 4000; loop: true; easing: linear"></a-sphere>
+
+  </a-entity>
+</a-entity>
+
+<!-- 土星：親の回転で公転、球体自身も自転 -->
+<a-entity position="0 0.24 0" rotation="0 310 0"
+  animation="property: rotation; from: 0 310 0; to: 0 670 0; dur: 35000; loop: true; easing: linear">
+  <a-entity position="0.86 0 0">
+    <a-sphere radius="0.066" segments-width="32" segments-height="20" material="src: url(saturn.jpg); roughness: 0.92"
+      animation="property: rotation; from: 0 0 0; to: 0 360 0; dur: 6000; loop: true; easing: linear"></a-sphere>
+
+    <!-- 土星の輪：半透明の2本のリング -->
+    <a-ring rotation="-68 0 15" radius-inner="0.079" radius-outer="0.116" segments-theta="80"
+      material="color: #D5B987; opacity: 0.82; transparent: true; side: double; shader: flat"></a-ring>
+    <a-ring rotation="-68 0 15" radius-inner="0.121" radius-outer="0.139" segments-theta="80"
+      material="color: #A6B2C7; opacity: 0.67; transparent: true; side: double; shader: flat"></a-ring>
+
+  </a-entity>
+</a-entity>
+
+<a-sphere position="-0.457 0.084 -0.112" radius="0.0038" material="color: #74A5D2; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="-0.331 0.084 0.333" radius="0.0047" material="color: #F3E2AB; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="-0.352 0.084 -0.685" radius="0.0049" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.430 0.084 0.419" radius="0.0055" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.899 0.084 0.050" radius="0.0054" material="color: #F3E2AB; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.061 0.084 -0.273" radius="0.0032" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.452 0.084 -0.623" radius="0.0047" material="color: #74A5D2; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.554 0.084 0.535" radius="0.0042" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.017 0.084 -0.280" radius="0.0029" material="color: #74A5D2; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.187 0.084 -0.209" radius="0.0040" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="-0.316 0.084 -0.192" radius="0.0040" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.212 0.084 -0.183" radius="0.0044" material="color: #74A5D2; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.275 0.084 -0.052" radius="0.0056" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="-0.498 0.084 0.588" radius="0.0056" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.431 0.084 0.188" radius="0.0054" material="color: #F3E2AB; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.292 0.084 -0.227" radius="0.0033" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.074 0.084 -0.464" radius="0.0025" material="color: #74A5D2; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="-0.060 0.084 -0.159" radius="0.0059" material="color: #F3E2AB; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.216 0.084 0.300" radius="0.0054" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.235 0.084 0.153" radius="0.0041" material="color: #8FC8ED; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="-0.148 0.084 0.083" radius="0.0055" material="color: #74A5D2; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="-0.611 0.084 -0.661" radius="0.0046" material="color: #74A5D2; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+<a-sphere position="0.090 0.084 0.359" radius="0.0060" material="color: #74A5D2; shader: flat; opacity: 0.87; transparent: true"></a-sphere>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+<script>
+  // マーカーを認識すると案内文が切り替わります。
+  document.addEventListener('DOMContentLoaded', function () {
+    const marker = document.getElementById('solar-marker');
+    const status = document.getElementById('marker-status');
+    if (!marker || !status) return;
+    marker.addEventListener('markerFound', function () {
+      status.textContent = '太陽のまわりを惑星が公転中 🪐';
+    });
+    marker.addEventListener('markerLost', function () {
+      status.textContent = 'キツネのマーカーにカメラを向けてね';
+    });
+  });
+</script>
+</body>
+</html>
