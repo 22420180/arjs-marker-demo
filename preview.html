@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARミニ水族館：3Dプレビュー</title>
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+<style>body{margin:0} .note{position:absolute;top:12px;left:12px;z-index:2;padding:10px 14px;color:#083146;background:rgba(255,255,255,.92);border-radius:12px;font:14px system-ui}</style>
+</head><body>
+<div class="note">🐠 3Dプレビュー（これはARではありません）<br>マウスで視点を動かせます</div>
+<a-scene background="color: #E3F5FB" vr-mode-ui="enabled:false">
+<a-entity position="0 0 0">
+
+
+ 海底：平たい円柱と、その上の砂の層 
+
+
+<a-cylinder color="#9C7750" height="0.05" position="0 0.025 0" radius="0.52" segments-radial="40"></a-cylinder>
+
+
+<a-cylinder color="#F6DCA4" height="0.015" position="0 0.054 0" radius="0.50" segments-radial="40"></a-cylinder>
+
+
+ 海底の小石（左手前） 
+
+
+<a-sphere color="#8D9AA7" position="-0.34 0.088 0.22" scale="0.083 0.034 0.065"></a-sphere>
+
+
+<a-sphere color="#B0B9BF" position="-0.23 0.078 0.27" scale="0.055 0.024 0.045"></a-sphere>
+
+
+<a-sphere color="#9CA8AD" position="0.23 0.088 -0.25" scale="0.077 0.034 0.061"></a-sphere>
+
+
+ 海藻：下側を軸にゆっくり揺れる 
+
+
+<a-entity animation="property: rotation; from: 0 0 -10; to: 0 0 12; dir: alternate; dur: 1700; loop: true; easing: easeInOutSine" position="-0.29 0.061 -0.17">
+<a-cylinder color="#3EAA73" height="0.24" position="0 0.12 0" radius="0.018" rotation="0 0 -12"></a-cylinder>
+<a-cylinder color="#65C28A" height="0.19" position="-0.05 0.10 0" radius="0.014" rotation="0 0 -34"></a-cylinder>
+<a-cylinder color="#249B73" height="0.20" position="0.044 0.105 0" radius="0.014" rotation="0 0 27"></a-cylinder>
+</a-entity>
+
+
+<a-entity animation="property: rotation; from: 0 0 10; to: 0 0 -12; dir: alternate; dur: 2100; loop: true; easing: easeInOutSine" position="0.29 0.061 0.20">
+<a-cylinder color="#48B980" height="0.21" position="0 0.105 0" radius="0.019" rotation="0 0 8"></a-cylinder>
+<a-cylinder color="#228C6E" height="0.15" position="-0.048 0.075 0" radius="0.014" rotation="0 0 -32"></a-cylinder>
+</a-entity>
+
+
+ サンゴ：短い円柱を組み合わせる 
+
+
+<a-entity position="0.31 0.064 -0.14">
+<a-cylinder color="#FF7990" height="0.15" position="0 0.075 0" radius="0.022"></a-cylinder>
+<a-cylinder color="#FF92A3" height="0.12" position="-0.041 0.105 0" radius="0.018" rotation="0 0 -38"></a-cylinder>
+<a-cylinder color="#FF7990" height="0.11" position="0.045 0.090 0.018" radius="0.018" rotation="28 0 34"></a-cylinder>
+</a-entity>
+
+
+<a-entity position="-0.09 0.063 0.32">
+<a-sphere color="#B998DF" position="0 0.055 0" scale="0.06 0.055 0.05"></a-sphere>
+<a-sphere color="#D1B6F2" position="0.047 0.050 0.007" scale="0.042 0.04 0.038"></a-sphere>
+</a-entity>
+
+
+ 魚1：オレンジ色。外側の回転で円を描いて泳ぐ 
+
+
+<a-entity animation="property: rotation; from: 0 0 0; to: 0 360 0; dur: 9000; loop: true; easing: linear">
+<a-entity animation="property: position; from: 0.32 0.34 0; to: 0.32 0.40 0; dir: alternate; dur: 1800; loop: true; easing: easeInOutSine" position="0.32 0.37 0" rotation="0 90 0">
+<a-sphere color="#FF9845" scale="0.12 0.075 0.059"></a-sphere>
+<a-cone animation="property: rotation; from: 0 0 -80; to: 0 0 -100; dir: alternate; dur: 420; loop: true" color="#FF713D" height="0.15" position="-0.16 0 0" radius-bottom="0.08" radius-top="0" rotation="0 0 -90"></a-cone>
+<a-cone color="#FFBC60" height="0.09" position="-0.025 0.076 0" radius-bottom="0.04" radius-top="0" rotation="0 0 -5"></a-cone>
+<a-sphere color="#1D3343" position="0.070 0.025 0.054" radius="0.012"></a-sphere>
+</a-entity>
+</a-entity>
+
+
+ 魚2：青色。反対方向に、少しゆっくり回遊 
+
+
+<a-entity animation="property: rotation; from: 0 145 0; to: 0 -215 0; dur: 11500; loop: true; easing: linear">
+<a-entity animation="property: position; from: 0.24 0.27 0; to: 0.24 0.32 0; dir: alternate; dur: 2200; loop: true; easing: easeInOutSine" position="0.24 0.28 0" rotation="0 -90 0">
+<a-sphere color="#49B8EE" scale="0.103 0.066 0.050"></a-sphere>
+<a-cone animation="property: rotation; from: 0 0 -80; to: 0 0 -100; dir: alternate; dur: 490; loop: true" color="#228AD4" height="0.13" position="-0.14 0 0" radius-bottom="0.065" radius-top="0" rotation="0 0 -90"></a-cone>
+<a-cone color="#9AE0F9" height="0.075" position="-0.01 0.070 0" radius-bottom="0.035" radius-top="0"></a-cone>
+<a-sphere color="#173A57" position="0.060 0.023 0.045" radius="0.010"></a-sphere>
+</a-entity>
+</a-entity>
+
+
+ 魚3：黄色。内側の小さな円を泳ぐ 
+
+
+<a-entity animation="property: rotation; from: 0 250 0; to: 0 610 0; dur: 7500; loop: true; easing: linear">
+<a-entity animation="property: position; from: 0.15 0.43 0; to: 0.15 0.49 0; dir: alternate; dur: 1400; loop: true; easing: easeInOutSine" position="0.15 0.46 0" rotation="0 90 0">
+<a-sphere color="#FFD35D" scale="0.092 0.058 0.048"></a-sphere>
+<a-cone animation="property: rotation; from: 0 0 -80; to: 0 0 -100; dir: alternate; dur: 380; loop: true" color="#FFA950" height="0.12" position="-0.12 0 0" radius-bottom="0.06" radius-top="0" rotation="0 0 -90"></a-cone>
+<a-cone color="#FFE89A" height="0.065" position="-0.012 0.059 0" radius-bottom="0.029" radius-top="0"></a-cone>
+<a-sphere color="#3E3B31" position="0.052 0.017 0.043" radius="0.010"></a-sphere>
+</a-entity>
+</a-entity>
+
+
+ 泡：海底から上へ繰り返し浮かぶ 
+
+
+<a-sphere animation="property: position; from: -0.05 0.12 -0.20; to: -0.05 0.62 -0.20; dur: 2600; loop: true; easing: linear" material="color: #D6F8FF; opacity: 0.72; transparent: true" position="-0.05 0.12 -0.20" radius="0.018"></a-sphere>
+
+
+<a-sphere animation="property: position; from: 0.08 0.13 -0.19; to: 0.08 0.60 -0.19; dur: 3300; loop: true; easing: linear" material="color: #D6F8FF; opacity: 0.60; transparent: true" position="0.08 0.25 -0.19" radius="0.012"></a-sphere>
+
+
+<a-sphere animation="property: position; from: 0.16 0.12 0.16; to: 0.16 0.58 0.16; dur: 2900; loop: true; easing: linear" material="color: #D6F8FF; opacity: 0.65; transparent: true" position="0.16 0.20 0.16" radius="0.014"></a-sphere>
+
+
+</a-entity>
+<a-entity camera position="0 1.2 2.7" rotation="-18 0 0" look-controls></a-entity>
+<a-light type="ambient" intensity="0.85"></a-light>
+<a-light type="directional" intensity="0.8" position="-1 2 2"></a-light>
+</a-scene></body></html>
